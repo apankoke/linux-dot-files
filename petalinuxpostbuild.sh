@@ -30,6 +30,9 @@ Libs2=$SourcePath/libQLinuxUtils.so.1
 Libs3=$SourcePath/libQLinuxUtils.so.1.0
 Libs4=$SourcePath/libQLinuxUtils.so.1.0.0
 Xorgconf=$SourcePath/xorg.conf
+Environment=$SourcePath/environment
+Mountnfs=$SourcePath/mountnfs
+Fstab=$SourcePath/fstab
 NetworkInterfaces=$SourcePath/interfaces
 RootfsPath=$ImagesPath/rootfs
 ExtractRootfs=false
@@ -66,27 +69,18 @@ if [ "$ExtractRootfs" = true ] ; then
     echo "now delete (first), extract the rootfs to the directory" "(" $RootfsPath ")"
     echo "--------------------------------------------------------------------"
     # löschen des Ordners
-    ##rm -rf $RootfsPath
+    rm -rf $RootfsPath
     # entpacken....
     # anlegen des Ordners
-    ##mkdir $RootfsPath
+    mkdir $RootfsPath
     # entpacken....
-    ##echo "un-tar $FileNameRootfs to to $RootfsPath"
-    ##tar -xf $FileNameRootfs -C $RootfsPath
-    ##ls $RootfsPath
+    echo "un-tar $FileNameRootfs to to $RootfsPath"
+    tar -xf $FileNameRootfs -C $RootfsPath
+    ls $RootfsPath
     echo "-----------------------------------------------------------------------------------"
-    echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
-    datestring=$DestPath-$(date +%m.%d.%Y)
-    echo "rename $Destpath to $datestring"
-    #mv $DestPath $datestring
-    rsync -a $DestPath/ $datestring
+    echo "--- first delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
     rm -rf $DestPath
-    mkdir $DestPath
-    echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
-    #cp -arfv $RootfsPath/ $DestPath
-    RootfsPath=$RootfsPath"/"
-    echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
-    rsync -arv $RootfsPath $DestPath
+    cp -arfv $RootfsPath $DestPath
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
 echo "+++ copy things from $Firmware to" $DestPath/lib
@@ -115,8 +109,20 @@ cp -vf $Libs4 $DestPath/usr/lib
 echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
 cp -vf $Xorgconf $DestPath/etc/X11
 
+echo "+++ copy things from $Environment to"  $DestPath/etc
+cp -vf $Xorgconf $DestPath/etc
+
+echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
+# ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
+cp -vf $Xorgconf $DestPath/etc/init.d
+
+echo "+++ copy things from $Fstab to"  $DestPath/etc
+cp -vf $Xorgconf $DestPath/etc
+
+
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
+
 
 
 if [ -d "$4" ]; then
