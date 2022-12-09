@@ -69,20 +69,30 @@ if [ "$ExtractRootfs" = true ] ; then
     echo "now delete (first), extract the rootfs to the directory" "(" $RootfsPath ")"
     echo "--------------------------------------------------------------------"
     # löschen des Ordners
-    rm -rf $RootfsPath
+    ##rm -rf $RootfsPath
     # entpacken....
     # anlegen des Ordners
-    mkdir $RootfsPath
+    ##mkdir $RootfsPath
     # entpacken....
-    echo "un-tar $FileNameRootfs to to $RootfsPath"
-    tar -xf $FileNameRootfs -C $RootfsPath
-    ls $RootfsPath
+    ##echo "un-tar $FileNameRootfs to to $RootfsPath"
+    ##tar -xf $FileNameRootfs -C $RootfsPath
+    ##ls $RootfsPath
     echo "-----------------------------------------------------------------------------------"
-    echo "--- first delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
+    echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
+    datestring=$DestPath-$(date +%m.%d.%Y)
+    echo "rename $Destpath to $datestring"
+    #mv $DestPath $datestring
+    rsync -a $DestPath/ $datestring
     rm -rf $DestPath
-    cp -arfv $RootfsPath $DestPath
+    mkdir $DestPath
+    echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
+    #cp -arfv $RootfsPath/ $DestPath
+    RootfsPath=$RootfsPath"/"
+    echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
+    rsync -arv $RootfsPath $DestPath
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
+
 echo "+++ copy things from $Firmware to" $DestPath/lib
 cp -avrf $Firmware $DestPath/lib
 echo "+++ copy things from $RootFiles to" $DestPath/home
