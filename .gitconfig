@@ -1,0 +1,29 @@
+[core]
+
+[alias]
+    st = status -sb
+    up = !git fetch && git rebase --autostash FETCH_HEAD
+    wdiff  = diff --word-diff
+    tree = log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    unchanged = update-index --assume-unchanged
+    no-unchanged = update-index --no-assume-unchanged
+    rs = remote show
+    rso = remote show origin
+    rsv = remote -v
+    tf = ls-tree -r master --name-only
+    if = status --ignored
+    si = status --ignored
+    cc = diff comprion/master
+    co = diff origin/master
+    
+
+[user]
+	name = Andreas Pankoke
+	email = apankoke@comprion.com
+[color]
+	ui = auto
+[core]
+	editor = xed
+[safe]
+	directory = /mnt/project_zwo/2021.2/CLWaveLinux
