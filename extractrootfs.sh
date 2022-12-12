@@ -1,5 +1,5 @@
 #!/bin/sh
-# copy things to rootfs after build
+# extract  rootfs after build
 # SourcePath,DestPath enthält nur den path
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
 # erstmal in diese Ebene wechseln: 
@@ -99,51 +99,3 @@ if [ "$ExtractRootfs" = true ] ; then
     rsync -arv $RootfsPath $DestPath
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
-
-echo "+++ copy things from $Firmware to" $DestPath/lib
-cp -avrf $Firmware $DestPath/lib
-echo "+++ copy things from $RootFiles to" $DestPath/home
-yes | cp -avrf $RootFiles $DestPath/home
-
-echo "+++ copy things from $UserPetalinux to" $DestPath/home
-cp -avrf $UserPetalinux $DestPath/home
-
-echo "+++ copy things from $UserTestOperator to" $DestPath/home
-cp -avrf $UserTestOperator $DestPath/home
-
-echo "+++ copy things from $CD_BuildPath to" $DestPath/usr/bin
-cp -vf $CD_BuildPath $DestPath/usr/bin
-echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
-cp -vf $MatchBox $DestPath/usr/share/applications
-echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
-cp -vf $Icon $DestPath/usr/share/pixmaps
-echo "+++ copy things from $Libs1 $Libs2 $Libs3 $Libs4 to"  $DestPath/usr/slib
-cp -vf $Libs1 $DestPath/usr/lib
-cp -vf $Libs2 $DestPath/usr/lib
-cp -vf $Libs3 $DestPath/usr/lib
-cp -vf $Libs4 $DestPath/usr/lib
-
-echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
-cp -vf $Xorgconf $DestPath/etc/X11
-
-echo "+++ copy things from $Environment to"  $DestPath/etc
-cp -vf $Xorgconf $DestPath/etc
-
-echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
-# ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
-cp -vf $Xorgconf $DestPath/etc/init.d
-
-echo "+++ copy things from $Fstab to"  $DestPath/etc
-cp -vf $Xorgconf $DestPath/etc
-
-
-echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
-cp -vf $NetworkInterfaces $DestPath/etc/network
-
-
-
-if [ -d "$4" ]; then
-    echo "+++ copy things from $FilePath to"  $DestPath/FileName
-    cp -r -vf  $FilePath $DestPath/$FileName
-fi
-echo "--------------------------- Scrpt ends -------------------------------------"
