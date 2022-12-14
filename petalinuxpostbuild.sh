@@ -37,31 +37,37 @@ do
   # that is reported in $choice.
   case $choice in
     "copy")
-      echo "copy config files ...$ScriptFiles"
-      cd $ScriptFiles
-      ./copyfiles2rootfs.sh $param1 $2 $3
+      echo "copy config files now ...$ScriptFiles"
+      # cd $ScriptFiles don't do it. because the check if directory of param 1 exist in the called script is not working!
+     # Tstart=$(date "+%s.%N")
+      bash $ScriptFiles/copyfiles2rootfs.sh $param1 $2 $3 > copyfiles.txt
+      #sleep 1
+      #Tend=$(date "+%s.%N")
+      #let te=(Tend-Tstart)
+      #echo "Elapsed: $te nanoseconds"
+      echo "finished"
       ;;
       
     extract)
       echo "extract rootfs ..."
+      bash $ScriptFiles/extractrootfs.sh $param1 $2 $3 > extractrootfs.txt
+      echo "finished"
       ;;
-     ## ./extractrootfs.sh $1 $2 $3 $4
-     ## ;;
 
     compress)
-      echo "compress it rootfs ..."
+      echo "compress the rootfs ..."
+      bash $ScriptFiles/compressrootfs.sh $param1 $2 $3 $4 > compressrootfs.txt
+      echo "finished"
       ;;
-      #./compressrootfs.sh $1 $2 $3 $4
-      #;;
 
     all)
-        echo "extract rootfs ..."
-      ./extractrootfs.sh $1 $2 $3 $4
+      echo "extract rootfs ..."
+      bash $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
       echo "copy config files ..."
-      ./copyfiles2rootfs.dh $1 $2 $3 $4
+      bash $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
       echo "compress it rootfs ..."
-      ./compressrootfs.sh $1 $2 $3 $4
-      # Set flag here, or call function, ...
+      bash $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
+      echo "finished"
       ;;
 
     exit)

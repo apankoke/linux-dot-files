@@ -4,19 +4,20 @@
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
 # erstmal in diese Ebene wechseln: 
 # /mnt/project_zwo/2021.2/CLWaveCompleteTree/Linux/xlnx$
-# sudo postbuildscript/extractrootfs.sh /srv/tftp/nfsroot images/linux > output.txt
+# sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux > output.txt
 # all filenames are fixed here
 # tested trusted apankoke@10/2022
+# /home/apankoke/projects/xilinx/2021.2/CLWaveCompleteTree/Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug
+# /mnt/project_zwo/2021.2/CLWaveCompleteTree/Linux/xlnx/postbuildscript/files
 
-echo "param1=$1"
-echo "param2=$2"
+echo "param1=$1 param2=$2 param3=$3 param4=$4"
 
 CUR=$PWD
 HoemDir=$Home
-
-DestPath=$1
-ImagesPath=$CUR/$2
-
+SourcePath=$CUR/$1
+DestPath=$2
+ImagesPath=$CUR/$3
+FileName=$CUR/$4
 
 echo "SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
 
@@ -44,6 +45,15 @@ ExtractRootfs=false
 FileNameRootfs=$ImagesPath/rootfs.tar.gz
 
 if [ -d "$1" ]; then
+    echo "\$SourcePath is="$SourcePath
+    echo "\$CD_BuildPath is="$CD_BuildPath
+else
+    echo "\$SourcePath is empty or does not exist!"
+    echo "usage: petalinuxbostbuild.sh <SourcePath> <DestinationPath> <Imagepath>"
+    exit 1
+fi
+
+if [ -d "$2" ]; then
         echo "\$DestPath is =" $DestPath
         # OK
     else
@@ -52,8 +62,8 @@ if [ -d "$1" ]; then
         exit 1
     fi
 
-if [ -d "$2" ]; then
-    echo  -e "\n\$ImagesPath="$2 "exist. Now continue..."
+if [ -d "$3" ]; then
+    echo  -e "\n\$ImagesPath="$3 "exist. Now continue..."
     ExtractRootfs=true;
 else
     echo "\$ImagesPath="$3 "does not exist. Petalinux not build?"
@@ -87,7 +97,5 @@ if [ "$ExtractRootfs" = true ] ; then
     RootfsPath=$RootfsPath"/"
     echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
     rsync -arv $RootfsPath $DestPath
-    echo "copy dropbear ssh key from backup...."
-    cp -arfv $datestring/etc/dropbear/dropbear_rsa_host_key $DestPath/etc/dropbear/dropbear_rsa_host_key
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi

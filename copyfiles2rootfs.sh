@@ -48,8 +48,8 @@ RootfsPath=$ImagesPath/rootfs
 ExtractRootfs=false
 FileNameRootfs=$ImagesPath/rootfs.tar.gz
 ls
-echo "####Check fo param1=$1"
-if [ -z "$1" ]
+echo "####Check fo param1=$SourcePath"
+if [ -d "$SourcePath" ]
 then
     echo "\$SourcePath is="$SourcePath
     echo "\$CD_BuildPath is="$CD_BuildPath

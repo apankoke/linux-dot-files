@@ -8,16 +8,19 @@
 # all filenames are fixed here
 # tested trusted apankoke@10/2022
 
-echo  "param1=$1 param2=$2"
+echo  "param1=$1" 
+echo "param2=$2"
+echo "param3=$3"
 
 CUR=$PWD
 HoemDir=$Home
 
 DestPath=$1
-ImagesPath=$CUR/$2
+SourcePath=$CUR/$1
+ImagesPath=$2
 
 
-echo "SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
+echo -e "SourcePath=$SourcePath\nDestPath=$DestPath\nImagesPath=$ImagesPath\nFileName=$FileName"
 
 
 FilePath=$SourcePath/$4
@@ -39,9 +42,9 @@ Mountnfs=$SourcePath/mountnfs
 Fstab=$SourcePath/fstab
 NetworkInterfaces=$SourcePath/interfaces
 RootfsPath=$ImagesPath/rootfs
-Updatefilename=update-linux.zip
+Updatefilename=update-linux.tar
 compressrootfs=false
-FileNameRootfs=$ImagesPath/rootfs.tar.gz
+FileNameRootfs=$RootfsPath/rootfs.tar.gz
 
 if [ -d "$1" ]; then
         echo "\$DestPath is =" $DestPath
@@ -63,14 +66,14 @@ fi
 
 if [ "$compressrootfs" = true ] ; then
     echo "--------------------------------------------------------------------"
-    echo "now compress the rootfs to the directory" "(" $RootfsPath ")"
+    echo "now compress the rootfs $RootfsPath to the directory" "(" $Imagepath ")"
     echo "--------------------------------------------------------------------"
     
     # packen....
-    echo "zip $FileNameRootfs to to $RootfsPath"
-    zip -r $RootfsPath/$Updatefilename $RootfsPath
-    
-    ls $RootfsPath/*.zip
-    
+    echo "tar $ImagesPath/$Updatefilename to $ImagesPath"
+   # zip -r $RootfsPath/$Updatefilename $RootfsPath
+    #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
+    tar -zcvf $ImagesPath/$Updatefilename $ImagesPath
+      
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
