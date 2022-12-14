@@ -8,8 +8,7 @@
 # all filenames are fixed here
 # tested trusted apankoke@10/2022
 
-echo "param1=$1"
-echo "param2=$2"
+echo  "param1=$1 param2=$2"
 
 CUR=$PWD
 HoemDir=$Home
@@ -87,7 +86,5 @@ if [ "$ExtractRootfs" = true ] ; then
     RootfsPath=$RootfsPath"/"
     echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
     rsync -arv $RootfsPath $DestPath
-    echo "copy dropbear ssh key from backup...."
-    cp -arfv $datestring/etc/dropbear/dropbear_rsa_host_key $DestPath/etc/dropbear/dropbear_rsa_host_key
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
