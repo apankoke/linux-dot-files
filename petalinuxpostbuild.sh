@@ -4,7 +4,15 @@
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
 # erstmal in diese Ebene wechseln: 
 # /mnt/project_zwo/2021.2/CLWaveCompleteTree/Linux/xlnx$
-# sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux > output.txt
+# ruft sub scripts auf. Die subscripts performen ihre Ausgaben in Textdateien.
+#
+# sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux
+#
+# Das auto als 4. Parameter bewirkt, z.B. für den Buildserver, das der ganze Scheissdreck automatisvh passiert
+# ohne dieses Menu aufzurufen.
+# automatisch extractrootfs,copyfiles2rootfs,compressrootfs
+# sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux auto
+#
 # all filenames are fixed here
 # tested trusted apankoke@12/2022
 
@@ -18,20 +26,79 @@ SourcePath=$CUR/$1
 ScriptFiles=$CUR/$1/..
 DestPath=$2
 ImagesPath=$CUR/$3
-FileName=$CUR/$4
+Override=$4
+Default="auto"
 
-echo "SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
+
+echo "SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath Override=$Override"
 
 choices=( 'copy' 'extract' 'compress' 'all' 'exit' )
 
+if [ "$Override" = "$Default" ]
+then
+    echo "\$Override is="$Override
+    echo "continue with default options...."
+    echo "extract rootfs ..."
+    bash $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
+    echo "copy config files ..."
+    bash $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
+    echo "compress it rootfs ..."
+    bash $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
+    echo "finished"
+    exit 1
+else
+    echo "\$Override($Override) is NOT $Default!"
+    echo "exit now!"
+fi
+# Custom `select` implementation that allows *empty* input.
+# Pass the choices as individual arguments.
+# Output is the chosen item, or "", if the user just pressed ENTER.
+# Example:
+#    choice=$(selectWithDefault 'one' 'two' 'three')
+selectWithDefault() {
+
+  local item i=0 numItems=$# 
+
+  # Print numbered menu items, based on the arguments passed.
+  for item; do         # Short for: for item in "$@"; do
+    printf '%s\n' "$((++i))) $item"
+  done >&2 # Print to stderr, as `select` does.
+
+  # Prompt the user for the index of the desired item.
+  while :; do
+    printf %s "${PS3-#? }" >&2 # Print the prompt string to stderr, as `select` does.
+    read -r index
+    # Make sure that the input is either empty or that a valid index was entered.
+    [[ -z $index ]] && break  # empty input
+    (( index >= 1 && index <= numItems )) 2>/dev/null || { echo "Invalid selection. Please try again." >&2; continue; }
+    break
+  done
+
+  # Output the selected item, if any.
+  [[ -n $index ]] && printf %s "${@: index:1}"
+
+}
+
+# Der Versuch irgendwie ein default choice zu erreich. Ging alles nicht. Deshalb oben mit dem override argument gemacht.
+
+# choice=$(selectWithDefault "${choices[@]}")
+# case $choice in
+#  'exit')
+#   echo "exit choosen"
+# esac
+
 # Present the choices.
 # The user chooses by entering the *number* before the desired choice.
+
 select choice in "${choices[@]}"
 do
+ 
+  #choice=$(selectWithDefault "${choices[@]}")
+  # echo "YOur choice is = ${choice}"
   # If an invalid number was chosen, $choice will be empty.
   # Report an error and prompt again.
   [[ -n $choice ]] || { echo "Invalid choice." >&2; continue; }
-
+ 
   # Examine the choice.
   # Note that it is the choice string itself, not its number
   # that is reported in $choice.
