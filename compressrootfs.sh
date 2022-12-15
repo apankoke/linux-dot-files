@@ -66,7 +66,7 @@ fi
 
 if [ "$compressrootfs" = true ] ; then
     echo "--------------------------------------------------------------------"
-    echo "now compress the rootfs $RootfsPath to the directory" "(" $Imagepath ")"
+    echo "now compress the rootfs $RootfsPath to the directory" "(" $ImagesPath ")"
     echo "--------------------------------------------------------------------"
     
     # packen....
