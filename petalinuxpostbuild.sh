@@ -8,7 +8,7 @@
 #
 # sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux
 #
-# Das auto als 4. Parameter bewirkt, z.B. für den Buildserver, das der ganze Scheissdreck automatisvh passiert
+# Das auto als 4. Parameter bewirkt, z.B. für den Buildserver, das der ganze Scheissdreck automatisch passiert
 # ohne dieses Menu aufzurufen.
 # automatisch extractrootfs,copyfiles2rootfs,compressrootfs
 # sudo postbuildscript/petalinuxpostbuild.sh postbuildscript/files /srv/tftp/nfsroot images/linux auto

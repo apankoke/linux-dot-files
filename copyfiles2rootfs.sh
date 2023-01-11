@@ -22,6 +22,7 @@ FileName=$CUR/$4
 
 echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
 
+SDBootFiles=$ImagesPath/../../sd-boot
 LinuxImage=$ImagesPath/image.ub
 LinuxDeviceTree=$ImagesPath/system.dtb
 LinuxFPGA=$ImagesPath/system.bit
@@ -79,11 +80,13 @@ else
     
 fi
 
+
 echo "+++ Copy Linux boot files $LinuxImage" to $DestPath/linux
 mkdir -p $DestPath/linux
 cp -avf $LinuxImage $DestPath/linux
 cp -avf $LinuxDeviceTree $DestPath/linux
 cp -avf $LinuxFPGA $DestPath/linux
+cp -arfv $SDBootFiles $DestPath/linux
 
 echo "+++ copy things from $Firmware to" $DestPath/lib
 cp -avrf $Firmware $DestPath/lib

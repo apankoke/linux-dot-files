@@ -84,6 +84,9 @@ if [ "$ExtractRootfs" = true ] ; then
     echo "un-tar $FileNameRootfs to to $RootfsPath"
     tar -xf $FileNameRootfs -C $RootfsPath
     ls $RootfsPath
+    # aus dem current tftp/nfsroot/etc/dropbear den rsa key in das neue ungetarte Verzeichnis 
+    #backupen, damit nicht jedesmal der .ssh/known_hosts angepasst werden muss!
+    cp -arfv $DestPath/etc/dropbear $RootfsPath/etc/
     echo "-----------------------------------------------------------------------------------"
     echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
     datestring=$DestPath-$(date +%m.%d.%Y)
