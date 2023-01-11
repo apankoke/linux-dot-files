@@ -47,6 +47,8 @@ NetworkInterfaces=$SourcePath/interfaces
 RootfsPath=$ImagesPath/rootfs
 ExtractRootfs=false
 FileNameRootfs=$ImagesPath/rootfs.tar.gz
+Exports=$SourcePath/exports
+
 ls
 echo "####Check fo param1=$SourcePath"
 if [ -d "$SourcePath" ]
@@ -124,7 +126,8 @@ cp -vf $Fstab $DestPath/etc
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
 
-
+echo "+++ copy things from $Exports to"  $DestPath/etc
+cp -vf $Exports $DestPath/etc
 
 if [ -d "$4" ]; then
     echo "+++ copy things from $FilePath to"  $DestPath/FileName
