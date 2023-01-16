@@ -147,9 +147,15 @@ echo "<head>"
 echo "</head>"
 echo "<body>"
 echo "<h1>"
-echo "System version: "
+echo "System name: "
 curl  https://frightanic.com/goodies_content/docker-names.php
 echo "</h1>"
+echo "<h2>"
+echo "Rootfs Features:"
+echo "<ul>"
+echo "</ul>"
+echo "</h2>"
+echo "</body>"
 }>> system.html
 
 cp -afv system.html $DestPath/linux
