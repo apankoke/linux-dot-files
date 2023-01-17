@@ -177,6 +177,7 @@ chown apankoke:apankoke system.html
 # Getz das FeatureList prog aufrufen mit Parametern:
 # Das wird die system.html mit den Features und Versionen etc. aus dem aktuellen
 # Linux befruchten.
+#ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
 ./FeatureList rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
