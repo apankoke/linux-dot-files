@@ -169,5 +169,15 @@ echo "</ul>"
 echo "</body>"
 }>> system.html
 
+chown apankoke:apankoke system.html
+# wir sind hier root. Das funzt nicht mit dem FeatureList....
+
+
+# wir im der Ebene CLWaveCompleteTree/Linux/xlnx geschrieben
+# Getz das FeatureList prog aufrufen mit Parametern:
+# Das wird die system.html mit den Features und Versionen etc. aus dem aktuellen
+# Linux befruchten.
+./FeatureList rootfs_config .config Makefile_Kernel config
+
 cp -afv system.html $DestPath/linux
 echo "--------------------------- Scrpt ends -------------------------------------"
