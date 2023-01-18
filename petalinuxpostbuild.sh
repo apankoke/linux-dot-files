@@ -21,7 +21,7 @@ echo "param0=$0 param1=$1 param2=$2 param3=$3 param4=$4"
 
 param1=$1
 CUR=$PWD
-HoemDir=$Home
+HomeDir=$Home
 SourcePath=$CUR/$1
 ScriptFiles=$CUR/$1/..
 DestPath=$2

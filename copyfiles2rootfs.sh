@@ -82,7 +82,8 @@ fi
 
 
 echo "+++ Copy Linux boot files $LinuxImage" to $DestPath/linux
-mkdir -p $DestPath/linux
+mkdir -pv $DestPath/linux
+chown -Rv apankoke:apankoke $DestPath/linux
 cp -avf $LinuxImage $DestPath/linux
 cp -avf $LinuxDeviceTree $DestPath/linux
 cp -avf $LinuxFPGA $DestPath/linux
