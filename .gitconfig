@@ -10,12 +10,17 @@
     no-unchanged = update-index --no-assume-unchanged
     rs = remote show
     rso = remote show origin
+    lr = branch -a
+    tl = tag --list
     rsv = remote -v
     tf = ls-tree -r master --name-only
+    rtf = rm --cached
     if = status --ignored
     si = status --ignored
-    cc = diff comprion/master
-    co = diff origin/master
+    cc = diff comprion/master --name-only
+    co = diff origin/master --name-only
+    dif = diff --name-only  
+    
     
 
 [user]
