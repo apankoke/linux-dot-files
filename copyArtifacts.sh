@@ -30,6 +30,7 @@ done
 FilePath=$SourcePath/$FileName
 
 echo --------------------------------------------------------------------
+echo "param1=$SourcePath param2=$DestPath param3=$DestPath2 param4=$FileName"
 echo copy artifacts from $FilePath to $DestPath and $DestPath2
 cp -a $FilePath $DestPath/$FileName
 cp -a $FilePath $DestPath2/$FileName
