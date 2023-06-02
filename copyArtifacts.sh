@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+# apankoke@6.2023 wenn ditte (!/bin/bash) hier nicht steht kommt es zu merkwürdigen Fehlermeldungen, seit Linux Mint 20. Vorher stand dort !/bin/sh
+# z.b. 22:if [[ not found.....
 # SourcePath,DestPath enthält nur den path
 # copy file für das .pro Fie im QT Creator
 # z.B.: QMAKE_POST_LINK +=  sudo $${HOME}/copyArtifacts.sh  $${OUT_PWD} /srv/tftp/nfsroot/home/root
