@@ -29,7 +29,7 @@ DNF=$SourcePath/dnf/yum.repos.d/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
 MODC=$SourcePath/modc/modc
-MODS=$SourcePath/modc/mods
+MODS=$SourcePath/modc/mods.elf
 
 SDBootFiles=$ImagesPath/../../sd-boot
 LinuxImage=$ImagesPath/image.ub
