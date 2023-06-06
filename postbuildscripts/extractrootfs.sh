@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # extract  rootfs after build
 # SourcePath,DestPath enthält nur den path
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)

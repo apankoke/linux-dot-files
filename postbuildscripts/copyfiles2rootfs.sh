@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # copy things to rootfs after build
 # SourcePath,DestPath enthält nur den path
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
@@ -29,7 +29,7 @@ DNF=$SourcePath/dnf/yum.repos.d/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
 MODC=$SourcePath/modc/modc
-MODS=$SourcePath/mods
+MODS=$SourcePath/modc/mods
 
 SDBootFiles=$ImagesPath/../../sd-boot
 LinuxImage=$ImagesPath/image.ub
