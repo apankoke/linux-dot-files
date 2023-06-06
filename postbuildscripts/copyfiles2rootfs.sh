@@ -62,6 +62,8 @@ RootfsPath=$ImagesPath/rootfs
 ExtractRootfs=false
 FileNameRootfs=$ImagesPath/rootfs.tar.gz
 Exports=$SourcePath/exports
+# /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/testDevicetree.sh
+scripts=$SourcePath/testDevicetree.sh
 
 ls
 echo "####Check fo param1=$SourcePath"
@@ -146,6 +148,10 @@ echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
 # ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
 
 cp -avf $Mountnfs $DestPath/etc/init.d/
+ 
+echo "+++ copy things from $scripts to"  $DestPath/home/root
+cp -avf $scripts $DestPath/home/root
+
 
 echo "+++ copy things from $Fstab to"  $DestPath/etc
 cp -vf $Fstab $DestPath/etc
