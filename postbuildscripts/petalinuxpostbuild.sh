@@ -137,7 +137,14 @@ do
       echo "compress it rootfs ..."
       bash $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
       echo "finished"
-      ;;
+     
+      echo "now copy the tar ball archive to the apankoke linux computer in the office..."
+      echo "this is only possible, if the comption vpn ist opened"
+      # geht offenbar nur ins home verzeichnis, bzw in ein Verzeichnis auf das der user auch zuriff hat
+      scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
+
+      echo "finished postbuildscript"
+            ;;
 
     exit)
       echo "Exiting. Waste away from doing nothing."
@@ -177,3 +184,10 @@ while true; do
         * ) echo "Please answer yes or no.";
     esac
 done
+
+echo "now copy the tar ball archive to the apankoke linux computer in the office..."
+echo "this is only possible, if the comption vpn ist opened"
+# geht offenbar nur ins home verzeichnis, bzw in ein Verzeichnis auf das der user auch zuriff hat
+scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
+
+echo "finished postbuildscript"

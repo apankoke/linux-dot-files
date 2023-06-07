@@ -25,7 +25,7 @@ echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesP
 #copy dnf paketmanager things
 # /home/apankoke/projects/xilinx/2021.2/CLWaveCompleteTree/Linux/xlnx/postbuildscript/files/dnf/yum.repos.d/zynqmp-generic_eg.repo
 
-DNF=$SourcePath/dnf/yum.repos.d/zynqmp-generic_eg.repo
+DNF=$SourcePath/dnf/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
 MODC=$SourcePath/modc/modc
@@ -210,6 +210,9 @@ chown apankoke:apankoke system.html
 # Das wird die system.html mit den Features und Versionen etc. aus dem aktuellen
 # Linux befruchten.
 #ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
+# im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
+echo -e @Hell there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
+cd..
 ./FeatureList rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
