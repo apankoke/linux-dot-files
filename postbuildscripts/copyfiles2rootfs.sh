@@ -29,6 +29,7 @@ DNF=$SourcePath/dnf/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
 MODC=$SourcePath/modc/modc
+# /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/modc/mods.elf
 MODS=$SourcePath/modc/mods.elf
 
 SDBootFiles=$ImagesPath/../../sd-boot
@@ -212,7 +213,7 @@ chown apankoke:apankoke system.html
 #ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
 # im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
 echo -e "Hell there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
-cd..
+cd ..
 ./FeatureList rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
