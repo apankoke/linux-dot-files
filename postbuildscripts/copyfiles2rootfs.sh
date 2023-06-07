@@ -212,6 +212,7 @@ chown apankoke:apankoke system.html
 # Linux befruchten.
 #ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
 # im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
+# apankoke@7.6.2023 ToDo das funktioniert hier noch nicht!
 echo -e "Hell there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
 cd ..
 ./FeatureList rootfs_config .config Makefile_Kernel config
