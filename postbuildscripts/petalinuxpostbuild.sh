@@ -173,7 +173,7 @@ while true; do
 done
 
 echo "now copying some configfiles to the rootfs in tftp folder"
-./copyfiles2rootfs.dh $1 $2 $3 $4
+./copyfiles2rootfs.sh $1 $2 $3 $4
 
 echo "now compress(zip) rootfs in tftp folder."
 while true; do
