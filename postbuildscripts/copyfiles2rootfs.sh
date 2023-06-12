@@ -20,6 +20,8 @@ DestPath=$2
 ImagesPath=$CUR/$3
 FileName=$CUR/$4
 
+cd plnx/Linux/xlnx/postbuildscript
+
 echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
 
 #copy dnf paketmanager things
@@ -169,6 +171,7 @@ if [ -d "$4" ]; then
     cp -r -vf  $FilePath $DestPath/$FileName
 fi
 
+cd ..
 rm -f system.html
 
 URL="curl  https://frightanic.com/goodies_content/docker-names.php"
@@ -214,7 +217,7 @@ chown apankoke:apankoke system.html
 # im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
 # apankoke@7.6.2023 ToDo das funktioniert hier noch nicht!
 echo -e "Hell there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
-cd ..
+
 ./FeatureList rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
