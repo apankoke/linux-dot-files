@@ -21,7 +21,7 @@
 # call all the holy moly sub scripts here:
 echo "param0=$0 param1=$1 param2=$2 param3=$3 param4=$4"
 
-kjkbgkjkg- sollte einen Fehler erzeugen :-)
+#kjkbgkjkg- sollte einen Fehler erzeugen :-)
 
 param1=$1
 CUR=$PWD
