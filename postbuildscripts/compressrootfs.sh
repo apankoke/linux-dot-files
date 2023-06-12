@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe 
 # extract  rootfs after build
 # SourcePath,DestPath enthält nur den path
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
@@ -73,7 +73,7 @@ if [ "$compressrootfs" = true ] ; then
     echo "tar $ImagesPath/$Updatefilename to $ImagesPath"
    # zip -r $RootfsPath/$Updatefilename $RootfsPath
     #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
-    tar -zcvf $ImagesPath/$Updatefilename $ImagesPath || true
+    tar -zcvf $ImagesPath/$Updatefilename $ImagesPath -C $ImagesPath $(ls -A $ImagesPath) || true
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi

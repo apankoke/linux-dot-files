@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/bash -xe 
+# das -xe sorgt dafür das vor der Ausführung eines Befehls, dieser geprinted wird. das -e lässt im Fehlerfall 
+# das script mit dem entsprechendem exit-code "aussteigen"
 # extract/copy/compress things to rootfs after petalinux-build
 # SourcePath,DestPath enthält nur den path
 # Aufruf: mit Ausgabedatei,da unglaublich viel Ausgabe (-v)
@@ -41,13 +43,13 @@ then
     echo "\$Override is="$Override
     echo "continue with default options...."
     echo "extract rootfs ..."
-    bash $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
+    $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
     echo "copy config files ..."
-    bash $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
+    $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
     echo "compress it rootfs ..."
-    bash $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
+    $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
     echo "finished"
-    exit 1
+    exit 0
 else
     echo "\$Override($Override) is NOT $Default!"
     echo "exit now!"
@@ -109,7 +111,7 @@ do
       echo "copy config files now ...$ScriptFiles"
       # cd $ScriptFiles don't do it. because the check if directory of param 1 exist in the called script is not working!
      # Tstart=$(date "+%s.%N")
-      bash $ScriptFiles/copyfiles2rootfs.sh $param1 $2 $3 > copyfiles.txt
+      $ScriptFiles/copyfiles2rootfs.sh $param1 $2 $3 > copyfiles.txt
       #sleep 1
       #Tend=$(date "+%s.%N")
       #let te=(Tend-Tstart)
@@ -119,7 +121,7 @@ do
       
     extract)
       echo "extract rootfs ..."
-      bash $ScriptFiles/extractrootfs.sh $param1 $2 $3 > extractrootfs.txt
+      $ScriptFiles/extractrootfs.sh $param1 $2 $3 > extractrootfs.txt
       echo "finished"
       ;;
 
@@ -131,11 +133,11 @@ do
 
     all)
       echo "extract rootfs ..."
-      bash $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
+      $ScriptFiles/extractrootfs.sh $1 $2 $3 $4 > extractrootfs.txt
       echo "copy config files ..."
-      bash $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
+      $ScriptFiles/copyfiles2rootfs.sh $1 $2 $3 $4 > copyfiles.txt
       echo "compress it rootfs ..."
-      bash $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
+      $ScriptFiles/compressrootfs.sh $1 $2 $3 $4 > compressrootfs.txt
       echo "finished"
      
       echo "now copy the tar ball archive to the apankoke linux computer in the office..."
