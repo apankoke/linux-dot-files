@@ -73,7 +73,8 @@ if [ "$compressrootfs" = true ] ; then
     echo "tar $ImagesPath/$Updatefilename to $ImagesPath"
    # zip -r $RootfsPath/$Updatefilename $RootfsPath
     #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
-    tar -zcvf $ImagesPath/$Updatefilename $ImagesPath -C $ImagesPath $(ls -A $ImagesPath) || true
+    #tar -zcvf $ImagesPath/$Updatefilename $ImagesPath -C $ImagesPath $(ls -A $ImagesPath) || true
+    tar -zcvf $ImagesPath/$Updatefilename $ImagesPath
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
