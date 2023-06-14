@@ -43,6 +43,7 @@ Fstab=$SourcePath/fstab
 NetworkInterfaces=$SourcePath/interfaces
 RootfsPath=$ImagesPath/rootfs
 Updatefilename=update-linux.tar
+UpdatePath=$ImagesPath/../tarballs # Warning: both of these are now hardcoded in extractrootfs.sh to backup them
 compressrootfs=false
 FileNameRootfs=$RootfsPath/rootfs.tar.gz
 
@@ -70,11 +71,16 @@ if [ "$compressrootfs" = true ] ; then
     echo "--------------------------------------------------------------------"
     
     # packen....
-    echo "tar $ImagesPath/$Updatefilename to $ImagesPath"
    # zip -r $RootfsPath/$Updatefilename $RootfsPath
     #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
+<<<<<<< HEAD
     #tar -zcvf $ImagesPath/$Updatefilename $ImagesPath -C $ImagesPath $(ls -A $ImagesPath) || true
     tar -zcvf $ImagesPath/$Updatefilename $ImagesPath
+=======
+    echo "tar $ImagesPath to $UpdatePath/$Updatefilename"
+    mkdir -p $UpdatePath
+    tar -zcvf $UpdatePath/$Updatefilename -C $ImagesPath $(ls -A $ImagesPath) || true
+>>>>>>> b8159efb7987c7c3b3dcd1db07a8dd19d2f9c67c
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
