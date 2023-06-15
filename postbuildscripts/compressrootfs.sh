@@ -81,9 +81,3 @@ if [ "$compressrootfs" = true ] ; then
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
-
-echo "Now backup latest tarball"
-latestTarball=$DestPath/../tarballs/update-linux.tar
-
-datestring=$(dirname $latestTarball)/update-linux-$(date +%m.%d.%Y).tar
-cp -f $latestTarball $datestring || true
