@@ -73,14 +73,17 @@ if [ "$compressrootfs" = true ] ; then
     # packen....
    # zip -r $RootfsPath/$Updatefilename $RootfsPath
     #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
-<<<<<<< HEAD
     #tar -zcvf $ImagesPath/$Updatefilename $ImagesPath -C $ImagesPath $(ls -A $ImagesPath) || true
     tar -zcvf $ImagesPath/$Updatefilename $ImagesPath
-=======
     echo "tar $ImagesPath to $UpdatePath/$Updatefilename"
     mkdir -p $UpdatePath
     tar -zcvf $UpdatePath/$Updatefilename -C $ImagesPath $(ls -A $ImagesPath) || true
->>>>>>> b8159efb7987c7c3b3dcd1db07a8dd19d2f9c67c
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
+
+echo "Now backup latest tarball"
+latestTarball=$DestPath/../tarballs/update-linux.tar
+
+datestring=$(dirname $latestTarball)/update-linux-$(date +%m.%d.%Y).tar
+cp -f $latestTarball $datestring || true
