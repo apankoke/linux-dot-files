@@ -56,6 +56,7 @@ Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxU
 Libs5=$SourcePath/modc/libmledplugin.so
 Libs6=$SourcePath/modc/libqscopeviewplugin.so
 
+UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
 Environment=$SourcePath/environment
 Mountnfs=$SourcePath/mountnfs.sh
@@ -140,6 +141,11 @@ cp -avf $Libs6 $DestPath/usr/lib
 echo "+++ copy things from $DNF to"  $DestPath/etc/yum.repos.d
 mkdir  -pv $DestPath/etc/yum.repos.d
 cp -vf $DNF $DestPath/etc/yum.repos.d
+
+
+
+echo "+++ copy things from $UBootTools to"  $DestPath/etc/
+cp -vf $UBootTools $DestPath/etc
 
 echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
 cp -vf $Xorgconf $DestPath/etc/X11
