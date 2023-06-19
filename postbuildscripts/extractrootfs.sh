@@ -89,7 +89,7 @@ if [ "$ExtractRootfs" = true ] ; then
     cp -arfv $DestPath/etc/dropbear $RootfsPath/etc/
     echo "-----------------------------------------------------------------------------------"
     echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
-    datestring=$DestPath-$(date +%m.%d.%Y)
+    datestring=$DestPath-$(date -r $DestPath +%d.%m.%Y)
     echo "rename $Destpath to $datestring"
     #mv $DestPath $datestring
     rsync -a $DestPath/ $datestring
@@ -97,7 +97,7 @@ if [ "$ExtractRootfs" = true ] ; then
     mkdir $DestPath
     echo "Now backup latest tarball"
     latestTarball=$DestPath/../tarballs/update-linux.tar
-    datestring=$(dirname $latestTarball)/update-linux-$(date +%m.%d.%Y).tar
+    datestring=$(dirname $latestTarball)/update-linux-$(date -r $latestTarball +%d.%m.%Y).tar
     cp -f $latestTarball $datestring || true
     echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
     #cp -arfv $RootfsPath/ $DestPath
