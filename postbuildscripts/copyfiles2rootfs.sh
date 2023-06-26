@@ -34,6 +34,9 @@ MODC=$SourcePath/modc/modc
 # /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/modc/mods.elf
 MODS=$SourcePath/modc/mods.elf
 
+SocketStarter=$SourcePath/clwavesocket
+Socket=/builds/deploy/CLWavePrograms/socket/socket_debug.elf
+
 SDBootFiles=$ImagesPath/../../sd-boot
 LinuxImage=$ImagesPath/image.ub
 LinuxDeviceTree=$ImagesPath/system.dtb
@@ -122,6 +125,14 @@ cp -avrf $UserTestOperator $DestPath/home
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
 cp -vf $MODC $DestPath/usr/bin
 cp -vf $MODS $DestPath/usr/bin
+
+echo "+++ copy things from $SocketStarter and $Socket to " $DestPath/etc/init.d and $DestPath/usr/bin
+cp -vf $SocketStarter $DestPath/etc/init.d
+ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
+if [ -e $Socket ]; then
+    cp -vf $Socket $DestPath/usr/bin/socket.elf
+    chmod +x $DestPath/usr/bin/socket.elf
+fi
 
 echo "+++ copy things from $CD_BuildPath to" $DestPath/usr/bin
 cp -vf $CD_BuildPath $DestPath/usr/bin
