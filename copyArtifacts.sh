@@ -23,6 +23,7 @@ for n in $(seq 1 $#); do
     then
         echo -e "copy File $SourcePath/$1 $DestPath/$1\nFile is:\n File$n $1"
         cp -a $SourcePath/$1 $DestPath/$1
+        cp -a $SourcePath/$1 $DestPath2/$1
     else
         echo $1
     fi
