@@ -58,8 +58,10 @@ Icon=$SourcePath/ComprionDesktop.png
 # Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
 Libs1=/builds/deploy/CLWavePrograms/QLinuxUtils/libQLinuxUtils.so*
 # modc
-Libs5=$SourcePath/modc/libmledplugin.so
-Libs6=$SourcePath/modc/libqscopeviewplugin.so
+# Libs5=$SourcePath/modc/libmledplugin.so
+# Libs6=$SourcePath/modc/libqscopeviewplugin.so
+Libs5=/builds/deploy/CLWavePrograms/mwidgets/libmledplugin.so
+Libs6=/builds/deploy/CLWavePrograms/QScopeView/libqscopeviewplugin.so
 
 UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
