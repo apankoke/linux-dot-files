@@ -46,15 +46,17 @@ Firmware=$SourcePath/firmware
 RootFiles=$SourcePath/root
 UserPetalinux=$SourcePath/petalinux
 UserTestOperator=$SourcePath/testoperator
-CD_BuildPath=$SourcePath/../../../../Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug/ComprionDesktop
-CD=$SourcePath/ComprionDesktop
+# CD_BuildPath=$SourcePath/../../../../Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug/ComprionDesktop
+CD_BuildPath=/builds/deploy/CLWavePrograms/ComprionDesktop/ComprionDesktop
+# CD=$SourcePath/ComprionDesktop
 MatchBox=$SourcePath/ComprionDesktop.desktop
 Icon=$SourcePath/ComprionDesktop.png
 #/home/apankoke/projects/xilinx/2021.2/CLWaveCompleteTree/Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
-Libs1=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so
-Libs2=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1
-Libs3=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0
-Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
+# Libs1=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so
+# Libs2=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1
+# Libs3=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0
+# Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
+Libs1=/builds/deploy/CLWavePrograms/QLinuxUtils/libQLinuxUtils.so*
 # modc
 Libs5=$SourcePath/modc/libmledplugin.so
 Libs6=$SourcePath/modc/libqscopeviewplugin.so
@@ -140,11 +142,8 @@ echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
 cp -vf $MatchBox $DestPath/usr/share/applications
 echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
 cp -vf $Icon $DestPath/usr/share/pixmaps
-echo "+++ copy things from $Libs1 $Libs2 $Libs3 $Libs4 to"  $DestPath/usr/slib
+echo "+++ copy things from $Libs1 to"  $DestPath/usr/lib
 cp -avf $Libs1 $DestPath/usr/lib
-cp -avf $Libs2 $DestPath/usr/lib
-cp -avf $Libs3 $DestPath/usr/lib
-cp -avf $Libs4 $DestPath/usr/lib
 # modc libs
 cp -avf $Libs5 $DestPath/usr/lib
 cp -avf $Libs6 $DestPath/usr/lib
