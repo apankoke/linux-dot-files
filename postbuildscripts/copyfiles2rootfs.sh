@@ -30,9 +30,11 @@ echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesP
 DNF=$SourcePath/dnf/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
-MODC=$SourcePath/modc/modc
+#MODC=$SourcePath/modc/modc
+MODC=/builds/deploy/CLWavePrograms/modc/modc
 # /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/modc/mods.elf
-MODS=$SourcePath/modc/mods.elf
+#MODS=$SourcePath/modc/mods.elf
+MODS=/builds/deploy/CLWavePrograms/mods/mods.elf
 
 SocketStarter=$SourcePath/clwavesocket
 Socket=/builds/deploy/CLWavePrograms/socket/socket_debug.elf
