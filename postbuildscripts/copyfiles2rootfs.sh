@@ -49,7 +49,11 @@ FilePath=$SourcePath/$4
 Firmware=$SourcePath/firmware
 RootFiles=$SourcePath/root
 UserPetalinux=$SourcePath/petalinux
+UIDPetalinux=$(grep petalinux $DestPath/etc/passwd | cut -d":" -f3)
+GIDPetalinux=$(grep petalinux $DestPath/etc/passwd | cut -d":" -f4)
 UserTestOperator=$SourcePath/testoperator
+UIDTestOperator=$(grep testoperator $DestPath/etc/passwd | cut -d":" -f3)
+GIDTestOperator=$(grep testoperator $DestPath/etc/passwd | cut -d":" -f4)
 # CD_BuildPath=$SourcePath/../../../../Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug/ComprionDesktop
 CD_BuildPath=/builds/deploy/CLWavePrograms/ComprionDesktop/ComprionDesktop
 # CD=$SourcePath/ComprionDesktop
@@ -123,12 +127,15 @@ echo "+++ copy things from $Firmware to" $DestPath/lib
 cp -avrf $Firmware $DestPath/lib
 echo "+++ copy things from $RootFiles to" $DestPath/home
 yes | cp -avrf $RootFiles $DestPath/home
+chown root:root $DestPath/home/root
 
 echo "+++ copy things from $UserPetalinux to" $DestPath/home
 cp -avrf $UserPetalinux $DestPath/home
+chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
 
 echo "+++ copy things from $UserTestOperator to" $DestPath/home
 cp -avrf $UserTestOperator $DestPath/home
+chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
 $INSTALL_EXE $MODC $DestPath/usr/bin
