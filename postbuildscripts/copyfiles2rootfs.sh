@@ -13,6 +13,8 @@ echo "param2=$2"
 echo "param3=$3"
 echo "param4=$4"
 
+INSTALL_EXE="install -m 755 -g root -o root -p"
+
 CUR=$PWD
 HoemDir=$Home
 SourcePath=$CUR/$1
@@ -30,9 +32,11 @@ echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesP
 DNF=$SourcePath/dnf/zynqmp-generic_eg.repo
 
 # copy the modc mods etc files
-MODC=$SourcePath/modc/modc
+#MODC=$SourcePath/modc/modc
+MODC=/builds/deploy/CLWavePrograms/modc/modc
 # /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/modc/mods.elf
-MODS=$SourcePath/modc/mods.elf
+#MODS=$SourcePath/modc/mods.elf
+MODS=/builds/deploy/CLWavePrograms/mods/mods.elf
 
 SocketStarter=$SourcePath/clwavesocket
 Socket=/builds/deploy/CLWavePrograms/socket/socket_debug.elf
@@ -46,18 +50,22 @@ Firmware=$SourcePath/firmware
 RootFiles=$SourcePath/root
 UserPetalinux=$SourcePath/petalinux
 UserTestOperator=$SourcePath/testoperator
-CD_BuildPath=$SourcePath/../../../../Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug/ComprionDesktop
-CD=$SourcePath/ComprionDesktop
+# CD_BuildPath=$SourcePath/../../../../Software/Cmpn-Linux/build-ComprionDesktop-CLWave-Debug/ComprionDesktop
+CD_BuildPath=/builds/deploy/CLWavePrograms/ComprionDesktop/ComprionDesktop
+# CD=$SourcePath/ComprionDesktop
 MatchBox=$SourcePath/ComprionDesktop.desktop
 Icon=$SourcePath/ComprionDesktop.png
 #/home/apankoke/projects/xilinx/2021.2/CLWaveCompleteTree/Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
-Libs1=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so
-Libs2=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1
-Libs3=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0
-Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
+# Libs1=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so
+# Libs2=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1
+# Libs3=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0
+# Libs4=$SourcePath/../../../../Software/build-QLinuxUtils-CLWave-Debug/libQLinuxUtils.so.1.0.0
+Libs1=/builds/deploy/CLWavePrograms/QLinuxUtils/libQLinuxUtils.so*
 # modc
-Libs5=$SourcePath/modc/libmledplugin.so
-Libs6=$SourcePath/modc/libqscopeviewplugin.so
+# Libs5=$SourcePath/modc/libmledplugin.so
+# Libs6=$SourcePath/modc/libqscopeviewplugin.so
+Libs5=/builds/deploy/CLWavePrograms/mwidgets/libmledplugin.so
+Libs6=/builds/deploy/CLWavePrograms/QScopeView/libqscopeviewplugin.so
 
 UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
@@ -123,31 +131,27 @@ echo "+++ copy things from $UserTestOperator to" $DestPath/home
 cp -avrf $UserTestOperator $DestPath/home
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
-cp -vf $MODC $DestPath/usr/bin
-cp -vf $MODS $DestPath/usr/bin
+$INSTALL_EXE $MODC $DestPath/usr/bin
+$INSTALL_EXE $MODS $DestPath/usr/bin
 
 echo "+++ copy things from $SocketStarter and $Socket to " $DestPath/etc/init.d and $DestPath/usr/bin
-cp -vf $SocketStarter $DestPath/etc/init.d
+$INSTALL_EXE $SocketStarter $DestPath/etc/init.d
 ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
 if [ -e $Socket ]; then
-    cp -vf $Socket $DestPath/usr/bin/socket.elf
-    chmod +x $DestPath/usr/bin/socket.elf
+    $INSTALL_EXE $Socket $DestPath/usr/bin/socket.elf
 fi
 
 echo "+++ copy things from $CD_BuildPath to" $DestPath/usr/bin
-cp -vf $CD_BuildPath $DestPath/usr/bin
+$INSTALL_EXE $CD_BuildPath $DestPath/usr/bin
 echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
 cp -vf $MatchBox $DestPath/usr/share/applications
 echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
 cp -vf $Icon $DestPath/usr/share/pixmaps
-echo "+++ copy things from $Libs1 $Libs2 $Libs3 $Libs4 to"  $DestPath/usr/slib
-cp -avf $Libs1 $DestPath/usr/lib
-cp -avf $Libs2 $DestPath/usr/lib
-cp -avf $Libs3 $DestPath/usr/lib
-cp -avf $Libs4 $DestPath/usr/lib
+echo "+++ copy things from $Libs1 to"  $DestPath/usr/lib
+$INSTALL_EXE $Libs1 $DestPath/usr/lib
 # modc libs
-cp -avf $Libs5 $DestPath/usr/lib
-cp -avf $Libs6 $DestPath/usr/lib
+$INSTALL_EXE $Libs5 $DestPath/usr/lib
+$INSTALL_EXE $Libs6 $DestPath/usr/lib
 
 echo "+++ copy things from $DNF to"  $DestPath/etc/yum.repos.d
 mkdir  -pv $DestPath/etc/yum.repos.d
@@ -167,10 +171,10 @@ cp -vf $Environment $DestPath/etc
 echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
 # ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
 
-cp -avf $Mountnfs $DestPath/etc/init.d/
+$INSTALL_EXE $Mountnfs $DestPath/etc/init.d/
  
 echo "+++ copy things from $scripts to"  $DestPath/home/root
-cp -avf $scripts $DestPath/home/root
+$INSTALL_EXE $scripts $DestPath/home/root
 
 
 echo "+++ copy things from $Fstab to"  $DestPath/etc
