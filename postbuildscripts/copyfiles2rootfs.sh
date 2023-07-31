@@ -73,6 +73,7 @@ Libs6=/builds/deploy/CLWavePrograms/QScopeView/libqscopeviewplugin.so
 
 UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
+XserverConf=$SourcePath/xserver-nodm-config
 Environment=$SourcePath/environment
 Mountnfs=$SourcePath/mountnfs.sh
 Fstab=$SourcePath/fstab
@@ -83,6 +84,8 @@ FileNameRootfs=$ImagesPath/rootfs.tar.gz
 Exports=$SourcePath/exports
 # /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/testDevicetree.sh
 scripts=$SourcePath/testDevicetree.sh
+sudoconf=$SourcePath/sudoers
+sudodir=$SourcePath/sudoers.d
 
 ls
 echo "####Check fo param1=$SourcePath"
@@ -128,6 +131,8 @@ cp -avrf $Firmware $DestPath/lib
 echo "+++ copy things from $RootFiles to" $DestPath/home
 yes | cp -avrf $RootFiles $DestPath/home
 chown root:root $DestPath/home/root
+# experimental: prevent root password login. Only way to become root is via sudo su or autologin.
+usermod -R $DestPath -L root
 
 echo "+++ copy things from $UserPetalinux to" $DestPath/home
 cp -avrf $UserPetalinux $DestPath/home
@@ -136,6 +141,7 @@ chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
 echo "+++ copy things from $UserTestOperator to" $DestPath/home
 cp -avrf $UserTestOperator $DestPath/home
 chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
+usermod -R $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
 $INSTALL_EXE $MODC $DestPath/usr/bin
@@ -171,6 +177,7 @@ cp -vf $UBootTools $DestPath/etc
 
 echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
 cp -vf $Xorgconf $DestPath/etc/X11
+$INSTALL_EXE $XserverConf /etc/defaults/xserver-nodm
 
 echo "+++ copy things from $Environment to"  $DestPath/etc
 cp -vf $Environment $DestPath/etc
@@ -187,6 +194,9 @@ $INSTALL_EXE $scripts $DestPath/home/root
 echo "+++ copy things from $Fstab to"  $DestPath/etc
 cp -vf $Fstab $DestPath/etc
 
+echo "+++ copy things from $sudoconf to"  $DestPath/etc
+cp -avf $sudoconf $DestPath/etc
+cp -avrf $sudodir $DestPath/etc/
 
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
