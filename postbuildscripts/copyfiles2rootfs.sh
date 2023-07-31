@@ -177,7 +177,7 @@ cp -vf $UBootTools $DestPath/etc
 
 echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
 cp -vf $Xorgconf $DestPath/etc/X11
-$INSTALL_EXE $XserverConf /etc/defaults/xserver-nodm
+$INSTALL_EXE $XserverConf $DestPath/etc/defaults/xserver-nodm
 
 echo "+++ copy things from $Environment to"  $DestPath/etc
 cp -vf $Environment $DestPath/etc
