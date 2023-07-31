@@ -195,8 +195,11 @@ echo "+++ copy things from $Fstab to"  $DestPath/etc
 cp -vf $Fstab $DestPath/etc
 
 echo "+++ copy things from $sudoconf to"  $DestPath/etc
-cp -avf $sudoconf $DestPath/etc
+install -m 440 -o root -g root -p $sudoconf $DestPath/etc
 cp -avrf $sudodir $DestPath/etc/
+chown -R root:root $DestPath/etc/$sudodir
+chmod 755 $DestPath/etc/$sudodir
+chmod 440 $DestPath/etc/$sudodir/*
 
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
