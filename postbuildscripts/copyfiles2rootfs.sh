@@ -132,7 +132,7 @@ echo "+++ copy things from $RootFiles to" $DestPath/home
 yes | cp -avrf $RootFiles $DestPath/home
 chown root:root $DestPath/home/root
 # experimental: prevent root password login. Only way to become root is via sudo su or autologin.
-usermod -R $DestPath -L root
+usermod -P $DestPath -L root
 
 echo "+++ copy things from $UserPetalinux to" $DestPath/home
 cp -avrf $UserPetalinux $DestPath/home
@@ -141,7 +141,7 @@ chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
 echo "+++ copy things from $UserTestOperator to" $DestPath/home
 cp -avrf $UserTestOperator $DestPath/home
 chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
-usermod -R $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
+usermod -P $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
 $INSTALL_EXE $MODC $DestPath/usr/bin
