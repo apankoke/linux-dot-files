@@ -197,9 +197,9 @@ cp -vf $Fstab $DestPath/etc
 echo "+++ copy things from $sudoconf to"  $DestPath/etc
 install -m 440 -o root -g root -p $sudoconf $DestPath/etc
 cp -avrf $sudodir $DestPath/etc/
-chown -R root:root $DestPath/etc/$sudodir
-chmod 755 $DestPath/etc/$sudodir
-chmod 440 $DestPath/etc/$sudodir/*
+chown -R root:root $DestPath/etc/sudoers.d
+chmod 755 $DestPath/etc/sudoers.d
+chmod 440 $DestPath/etc/sudoers.d/*
 
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
