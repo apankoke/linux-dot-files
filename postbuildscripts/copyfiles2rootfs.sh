@@ -257,9 +257,9 @@ chown apankoke:apankoke system.html
 #ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
 # im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
 # apankoke@7.6.2023 ToDo das funktioniert hier noch nicht!
-echo -e "Hell there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
+echo -e "Hello there, here is the sector scrutinizer. The Workspace is here: $WORKSPACE"
 
-./FeatureList rootfs_config .config Makefile_Kernel config
+./FeatureList.sh rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
 echo "--------------------------- Scrpt ends -------------------------------------"
