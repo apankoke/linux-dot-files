@@ -70,6 +70,9 @@ Libs1=/builds/deploy/CLWavePrograms/QLinuxUtils/libQLinuxUtils.so*
 # Libs6=$SourcePath/modc/libqscopeviewplugin.so
 Libs5=/builds/deploy/CLWavePrograms/mwidgets/libmledplugin.so
 Libs6=/builds/deploy/CLWavePrograms/QScopeView/libqscopeviewplugin.so
+Libs7=/builds/deploy/CLWavePrograms/qvisafile/libqvisafile.so*
+Libs8=/builds/deploy/CLWavePrograms/SCPIParser/libSCPIParser.so*
+Libs9=/builds/deploy/CLWavePrograms/antlr4-runtime/libantlr4-runtime.so*
 
 UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
@@ -165,6 +168,9 @@ $INSTALL_EXE $Libs1 $DestPath/usr/lib
 # modc libs
 $INSTALL_EXE $Libs5 $DestPath/usr/lib
 $INSTALL_EXE $Libs6 $DestPath/usr/lib
+$INSTALL_EXE $Libs7 $DestPath/usr/lib
+$INSTALL_EXE $Libs8 $DestPath/usr/lib
+$INSTALL_EXE $Libs9 $DestPath/usr/lib
 
 echo "+++ copy things from $DNF to"  $DestPath/etc/yum.repos.d
 mkdir  -pv $DestPath/etc/yum.repos.d
