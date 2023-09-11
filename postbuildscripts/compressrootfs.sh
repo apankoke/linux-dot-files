@@ -75,7 +75,10 @@ if [ "$compressrootfs" = true ] ; then
     #tar -zcvf [result-filename.tar.gz] [path-of-directory-to-compress]
     echo "tar $ImagesPath to $UpdatePath/$Updatefilename"
     mkdir -p $UpdatePath
-    tar -zcvf $UpdatePath/$Updatefilename -C $ImagesPath $(ls -A $ImagesPath) || true
+    tar -zcvf "$UpdatePath/$Updatefilename" -C "$ImagesPath" $(ls -A "$ImagesPath") || true
+    if [ -n "$SUDO_UID" ]; then # if we run using sudo, make sure we give the file back to the original user
+        chown $SUDO_UID:$SUDO_GID "$UpdatePath/$Updatefilename"
+    fi
 
     echo -e "\n------------------------ finished ------------------------------------------\n"
 fi
