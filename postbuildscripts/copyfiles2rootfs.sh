@@ -183,7 +183,7 @@ if [ -d "$4" ]; then
 fi
 
 echo "Running the script to apply the config files"
-./apply_files_overlay.sh $SourcePath $DestPath
+./apply_files_overlay.sh $SourcePath/overlay $DestPath
 
 cd ..
 rm -f system.html
