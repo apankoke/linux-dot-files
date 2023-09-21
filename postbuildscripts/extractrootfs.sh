@@ -101,7 +101,7 @@ if [ "$ExtractRootfs" = true ] ; then
     if [ -f "$latestTarball" ]; then
         echo "Now backup latest tarball"
         datestring=$(dirname $latestTarball)/update-linux-$(date -r $latestTarball +%d.%m.%Y).tar
-        cp -f $latestTarball $datestring || true
+        mv -f $latestTarball $datestring || true
     fi
     echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
     #cp -arfv $RootfsPath/ $DestPath

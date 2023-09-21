@@ -131,19 +131,16 @@ cp -arfv $SDBootFiles $DestPath/linux
 
 echo "+++ copy things from $Firmware to" $DestPath/lib
 cp -avrf $Firmware $DestPath/lib
-echo "+++ copy things from $RootFiles to" $DestPath/home
-yes | cp -avrf $RootFiles $DestPath/home
-chown root:root $DestPath/home/root
+# echo "+++ copy things from $RootFiles to" $DestPath/home
+# chown root:root $DestPath/home/root
 # experimental: prevent root password login. Only way to become root is via sudo su or autologin.
-usermod -P $DestPath -L root
+# usermod -P $DestPath -L root
 
-echo "+++ copy things from $UserPetalinux to" $DestPath/home
-cp -avrf $UserPetalinux $DestPath/home
-chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
+# echo "+++ copy things from $UserPetalinux to" $DestPath/home
+# chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
 
-echo "+++ copy things from $UserTestOperator to" $DestPath/home
-cp -avrf $UserTestOperator $DestPath/home
-chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
+# echo "+++ copy things from $UserTestOperator to" $DestPath/home
+# chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
 usermod -P $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
@@ -151,18 +148,17 @@ $INSTALL_EXE $MODC $DestPath/usr/bin
 $INSTALL_EXE $MODS $DestPath/usr/bin
 
 echo "+++ copy things from $SocketStarter and $Socket to " $DestPath/etc/init.d and $DestPath/usr/bin
-$INSTALL_EXE $SocketStarter $DestPath/etc/init.d
-ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
+# ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
 if [ -e $Socket ]; then
     $INSTALL_EXE $Socket $DestPath/usr/bin/socket.elf
 fi
 
 echo "+++ copy things from $CD_BuildPath to" $DestPath/usr/bin
 $INSTALL_EXE $CD_BuildPath $DestPath/usr/bin
-echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
-cp -vf $MatchBox $DestPath/usr/share/applications
-echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
-cp -vf $Icon $DestPath/usr/share/pixmaps
+#echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
+#cp -vf $MatchBox $DestPath/usr/share/applications
+#echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
+#cp -vf $Icon $DestPath/usr/share/pixmaps
 echo "+++ copy things from $Libs1 to"  $DestPath/usr/lib
 $INSTALL_EXE $Libs1 $DestPath/usr/lib
 # modc libs
@@ -172,51 +168,22 @@ $INSTALL_EXE $Libs7 $DestPath/usr/lib
 $INSTALL_EXE $Libs8 $DestPath/usr/lib
 $INSTALL_EXE $Libs9 $DestPath/usr/lib
 
-echo "+++ copy things from $DNF to"  $DestPath/etc/yum.repos.d
-mkdir  -pv $DestPath/etc/yum.repos.d
-cp -vf $DNF $DestPath/etc/yum.repos.d
 
-
-
-echo "+++ copy things from $UBootTools to"  $DestPath/etc/
-cp -vf $UBootTools $DestPath/etc
-
-echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
-cp -vf $Xorgconf $DestPath/etc/X11
-$INSTALL_EXE $XserverConf $DestPath/etc/default/xserver-nodm
-
-echo "+++ copy things from $Environment to"  $DestPath/etc
-cp -vf $Environment $DestPath/etc
 
 echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
 # ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
-
-$INSTALL_EXE $Mountnfs $DestPath/etc/init.d/
  
 echo "+++ copy things from $scripts to"  $DestPath/home/root
-$INSTALL_EXE $scripts $DestPath/home/root
+# $INSTALL_EXE $scripts $DestPath/home/root
 
-
-echo "+++ copy things from $Fstab to"  $DestPath/etc
-cp -vf $Fstab $DestPath/etc
-
-echo "+++ copy things from $sudoconf to"  $DestPath/etc
-install -m 440 -o root -g root -p $sudoconf $DestPath/etc
-cp -avrf $sudodir $DestPath/etc/
-chown -R root:root $DestPath/etc/sudoers.d
-chmod 755 $DestPath/etc/sudoers.d
-chmod 440 $DestPath/etc/sudoers.d/*
-
-echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
-cp -vf $NetworkInterfaces $DestPath/etc/network
-
-echo "+++ copy things from $Exports to"  $DestPath/etc
-cp -vf $Exports $DestPath/etc
 
 if [ -d "$4" ]; then
     echo "+++ copy things from $FilePath to"  $DestPath/FileName
     cp -r -vf  $FilePath $DestPath/$FileName
 fi
+
+echo "Running the script to apply the config files"
+./apply_files_overlay.sh $SourcePath $DestPath
 
 cd ..
 rm -f system.html
