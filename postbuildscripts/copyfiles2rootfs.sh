@@ -22,7 +22,7 @@ DestPath=$2
 ImagesPath=$CUR/$3
 FileName=$CUR/$4
 
-cd plnx/Linux/xlnx/postbuildscript
+# cd plnx/Linux/xlnx/postbuildscript
 
 echo "Current=$CUR SourcePath=$SourcePath DestPath=$DestPath ImagesPath=$ImagesPath FileName=$FileName"
 

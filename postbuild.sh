@@ -12,7 +12,7 @@
 # ${ProjName}=TEC
 # FEHLER sudo: no tty present and no askpass program specified
 # suders.d existiert, funktioniert aber hier, ECLIPSE nicht!!!
-# NOTLÖSUNG: in eclipse als admin: echo wh12skb | sudo -S /home/apankoke/postbuild.sh ${ProjDirPath} ${ProjName} ${ConfigName} /srv/tftp/nfsroot/lib/firmware
+# NOTLÖSUNG: in eclipse als admin: echo password-inklar-text | sudo -S /home/apankoke/postbuild.sh ${ProjDirPath} ${ProjName} ${ConfigName} /srv/tftp/nfsroot/lib/firmware
 # APankoke@2.2022 korrektur: so geht es. das script in sudoers.d eintragen und mit sudo vorab ausführen. Die befehle im Script NICHT mit sudo angeben!
 # dann braucht man diese ganze chown Sache nicht machen!
 
