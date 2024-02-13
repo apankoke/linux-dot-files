@@ -144,8 +144,8 @@ do
      
       echo "now copy the tar ball archive to the apankoke linux computer in the office..."
       echo "this is only possible, if the comption vpn ist opened"
-      # geht offenbar nur ins home verzeichnis, bzw in ein Verzeichnis auf das der user auch zuriff hat
-      scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
+      # geht offenbar nur ins home verzeichnis, bzw in ein Verzeichnis auf das der user auch zugriff hat
+      # scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
 
       echo "finished postbuildscript"
             ;;
@@ -192,6 +192,6 @@ done
 echo "now copy the tar ball archive to the apankoke linux computer in the office..."
 echo "this is only possible, if the comption vpn ist opened"
 # geht offenbar nur ins home verzeichnis, bzw in ein Verzeichnis auf das der user auch zuriff hat
-scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
+# scp /srv/tftp/nfsroot/update-linux.tar apankoke@192.168.112.69:/home/apankoke
 
 echo "finished postbuildscript"

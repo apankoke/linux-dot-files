@@ -16,27 +16,25 @@ SourcePath=$1
 DestPath=$2
 DestPath2=$3
 FileName=$4
+DestPath3=$5
 
+echo -e "Copy artifacts from\n$0 \n(actual dir=$PWD) has been called! \nparameter1 SourcePath=$SourcePath \nparam2 DestPath=$DestPath 
+        \nparam3 DestPath2=$DestPath2 \nparam4 FileName=$FileName \nparam5 DestPath3=$DestPath3! 
+        \n Here we go \n\n\n"
 
 for n in $(seq 1 $#); do
-    if [[ "$n" -ge 4 ]]
+    if [ $n -le 4 ]
     then
-        echo -e "copy File $SourcePath/$1 $DestPath/$1\nFile is:\n File$n $1"
-        cp -a $SourcePath/$1 $DestPath/$1
-        cp -a $SourcePath/$1 $DestPath2/$1
+        echo -e "## Nr:$n copy File $SourcePath/$1 $DestPath/$1 with rsync now"
+
+        rsync "$SourcePath/$FileName" "$DestPath/$FileName"
+        rsync "$SourcePath/$FileName" "$DestPath2/$FileName"
+        rsync "$SourcePath/$FileName" "$DestPath3/$FileName"
     else
-        echo $1
+        echo -e "Feddich"
     fi
   shift
 done
 
-FilePath=$SourcePath/$FileName
 
-echo --------------------------------------------------------------------
-echo "param1=$SourcePath param2=$DestPath param3=$DestPath2 param4=$FileName"
-echo copy artifacts from $FilePath to $DestPath and $DestPath2
-cp -a $FilePath $DestPath/$FileName
-cp -a $FilePath $DestPath2/$FileName
-# Kacke! cp $FilePath $DestPath/../../usr/bin
-echo --------------------------------------------------------------------
 

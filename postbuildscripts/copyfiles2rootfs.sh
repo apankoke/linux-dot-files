@@ -83,7 +83,7 @@ ExtractRootfs=false
 FileNameRootfs=$ImagesPath/rootfs.tar.gz
 Exports=$SourcePath/exports
 # /home/apankoke/projects/xilinx/2021.2/CLWave50/plnx/Linux/xlnx/postbuildscript/files/testDevicetree.sh
-scripts=$SourcePath/testDevicetree.sh
+# scripts=$SourcePath/testDevicetree.sh
 sudoconf=$SourcePath/sudoers
 sudodir=$SourcePath/sudoers.d
 
@@ -128,34 +128,36 @@ cp -arfv $SDBootFiles $DestPath/linux
 
 echo "+++ copy things from $Firmware to" $DestPath/lib
 cp -avrf $Firmware $DestPath/lib
-echo "+++ copy things from $RootFiles to" $DestPath/home
-yes | cp -avrf $RootFiles $DestPath/home
+echo "+++ copy things from $RootFiles to" $DestPath/home/root
+yes | cp -avrf $RootFiles/* $DestPath/home/root
 chown root:root $DestPath/home/root
 # experimental: prevent root password login. Only way to become root is via sudo su or autologin.
-usermod -P $DestPath -L root
+#usermod -P $DestPath -L root
 
-echo "+++ copy things from $UserPetalinux to" $DestPath/home
-cp -avrf $UserPetalinux $DestPath/home
+echo "+++ copy things from $UserPetalinux to" $DestPath/home/petalinux
+yes | cp -avrf $UserPetalinux $DestPath/home/petalinux
 chown -R $UIDPetalinux:$GIDPetalinux $DestPath/home/petalinux
 
-echo "+++ copy things from $UserTestOperator to" $DestPath/home
-cp -avrf $UserTestOperator $DestPath/home
+echo "+++ copy things from $UserTestOperator to" $DestPath/home/testoperator
+yes | cp -avrf $UserTestOperator $DestPath/home/testoperator
 chown -R $UIDTestOperator:$GIDTestOperator $DestPath/home/testoperator
-usermod -P $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
+#usermod -P $DestPath -G tty,input,video,shutdown,sudo,testoperator testoperator
 
 echo "+++ copy things from $MODC and $MODS to" $DestPath/usr/bin
 $INSTALL_EXE $MODC $DestPath/usr/bin
 $INSTALL_EXE $MODS $DestPath/usr/bin
 
-echo "+++ copy things from $SocketStarter and $Socket to " $DestPath/etc/init.d and $DestPath/usr/bin
-$INSTALL_EXE $SocketStarter $DestPath/etc/init.d
-ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
-if [ -e $Socket ]; then
-    $INSTALL_EXE $Socket $DestPath/usr/bin/socket.elf
-fi
+
+#echo "+++ copy things from $SocketStarter and $Socket to " $DestPath/etc/init.d and $DestPath/usr/bin
+#$INSTALL_EXE $SocketStarter $DestPath/etc/init.d
+#ln -sf /etc/init.d/clwavesocket $DestPath/etc/rc5.d/S16clwavesocket
+#if [ -e $Socket ]; then
+#    $INSTALL_EXE $Socket $DestPath/usr/bin/socket.elf
+#fi
+
 
 echo "+++ copy things from $CD_BuildPath to" $DestPath/usr/bin
-$INSTALL_EXE $CD_BuildPath $DestPath/usr/bin
+#$INSTALL_EXE $CD_BuildPath $DestPath/usr/bin
 echo "+++ copy things from $MatchBox to" $DestPath/usr/share/applications
 cp -vf $MatchBox $DestPath/usr/share/applications
 echo "+++ copy things from $MatchBox to"  $DestPath/usr/share/pixmaps
@@ -188,18 +190,18 @@ echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
 $INSTALL_EXE $Mountnfs $DestPath/etc/init.d/
  
 echo "+++ copy things from $scripts to"  $DestPath/home/root
-$INSTALL_EXE $scripts $DestPath/home/root
+#$INSTALL_EXE $scripts $DestPath/home/root
 
 
 echo "+++ copy things from $Fstab to"  $DestPath/etc
 cp -vf $Fstab $DestPath/etc
 
 echo "+++ copy things from $sudoconf to"  $DestPath/etc
-install -m 440 -o root -g root -p $sudoconf $DestPath/etc
-cp -avrf $sudodir $DestPath/etc/
-chown -R root:root $DestPath/etc/sudoers.d
-chmod 755 $DestPath/etc/sudoers.d
-chmod 440 $DestPath/etc/sudoers.d/*
+#install -m 440 -o root -g root -p $sudoconf $DestPath/etc
+#cp -avrf $sudodir $DestPath/etc/
+#chown -R root:root $DestPath/etc/sudoers.d
+#chmod 755 $DestPath/etc/sudoers.d
+#chmod 440 $DestPath/etc/sudoers.d/*
 
 echo "+++ copy things from $NetworkInterfaces to"  $DestPath/etc/network
 cp -vf $NetworkInterfaces $DestPath/etc/network
@@ -213,6 +215,8 @@ if [ -d "$4" ]; then
 fi
 
 cd ..
+echo "here we are:"
+ls -l
 rm -f system.html
 
 URL="curl  https://frightanic.com/goodies_content/docker-names.php"
@@ -257,9 +261,10 @@ chown apankoke:apankoke system.html
 #ToDo die config Dateien aus dem inneren der Linux build und Konfiguration hierhin kopieren!
 # im buildserver /mnt/builds_ssd/builds/workspace/CLWave50/plnx/Linux/xlnx/FeatureList
 # apankoke@7.6.2023 ToDo das funktioniert hier noch nicht!
-echo -e "Hello there, here is the sector scrutinizer! The Workspace is here: $WORKSPACE"
-
-
+cd xlnx
+echo -e "Hello there, here is the sector scrutinizer! The Workspace is here: $WORKSPACE pwd=$PWD"
+echo "here we are:"
+cat FeatureList.sh 
 ./FeatureList.sh rootfs_config .config Makefile_Kernel config
 
 cp -afv system.html $DestPath/linux
