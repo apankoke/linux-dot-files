@@ -59,7 +59,8 @@ if [ -d "$2" ]; then
     else
         echo "\$DestPath="$DestPath "doesnot exist!"
         echo "usage: extractrootfs.sh <SourcePath> <DestinationPath> <Imagepath>"
-        exit 1
+        echo "Trying to create $DestPath..."
+        mkdir -p "$DestPath" || exit 1
     fi
 
 if [ -d "$3" ]; then
@@ -86,19 +87,22 @@ if [ "$ExtractRootfs" = true ] ; then
     ls $RootfsPath
     # aus dem current tftp/nfsroot/etc/dropbear den rsa key in das neue ungetarte Verzeichnis 
     #backupen, damit nicht jedesmal der .ssh/known_hosts angepasst werden muss!
-    cp -arfv $DestPath/etc/dropbear $RootfsPath/etc/
     echo "-----------------------------------------------------------------------------------"
-    echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
-    datestring=$DestPath-$(date -r $DestPath +%d.%m.%Y)
-    echo "rename $Destpath to $datestring"
-    #mv $DestPath $datestring
-    rsync -a $DestPath/ $datestring
-    rm -rf $DestPath
-    mkdir $DestPath
-    echo "Now backup latest tarball"
+    if [ -n "$(ls -A $DestPath)" ]; then # if the directory is not empty, make a backup
+        echo "--- first backup the folder and then delete $DestPath and then copying/overwrite $RootfsPath to $DestPath ----"
+        cp -arfv $DestPath/etc/dropbear $RootfsPath/etc/
+        datestring=$DestPath-$(date -r $DestPath +%d.%m.%Y)
+        echo "rename $Destpath to $datestring"
+        rsync -a $DestPath/ $datestring
+        rm -rf $DestPath
+        mkdir $DestPath
+    fi
     latestTarball=$DestPath/../tarballs/update-linux.tar
-    datestring=$(dirname $latestTarball)/update-linux-$(date -r $latestTarball +%d.%m.%Y).tar
-    cp -f $latestTarball $datestring || true
+    if [ -f "$latestTarball" ]; then
+        echo "Now backup latest tarball"
+        datestring=$(dirname $latestTarball)/update-linux-$(date -r $latestTarball +%d.%m.%Y).tar
+        mv -f $latestTarball $datestring || true
+    fi
     echo "cur= $PWD Now rsync from $RootfsPath to $DestPath"
     #cp -arfv $RootfsPath/ $DestPath
     RootfsPath=$RootfsPath"/"

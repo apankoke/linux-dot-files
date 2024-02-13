@@ -70,6 +70,9 @@ Libs1=/builds/deploy/CLWavePrograms/QLinuxUtils/libQLinuxUtils.so*
 # Libs6=$SourcePath/modc/libqscopeviewplugin.so
 Libs5=/builds/deploy/CLWavePrograms/mwidgets/libmledplugin.so
 Libs6=/builds/deploy/CLWavePrograms/QScopeView/libqscopeviewplugin.so
+Libs7=/builds/deploy/CLWavePrograms/qvisafile/libqvisafile.so*
+Libs8=/builds/deploy/CLWavePrograms/SCPIParser/libSCPIParser.so*
+Libs9=/builds/deploy/CLWavePrograms/antlr4-runtime/libantlr4-runtime.so*
 
 UBootTools=$SourcePath/fw_env.config
 Xorgconf=$SourcePath/xorg.conf
@@ -167,27 +170,14 @@ $INSTALL_EXE $Libs1 $DestPath/usr/lib
 # modc libs
 $INSTALL_EXE $Libs5 $DestPath/usr/lib
 $INSTALL_EXE $Libs6 $DestPath/usr/lib
-
-echo "+++ copy things from $DNF to"  $DestPath/etc/yum.repos.d
-mkdir  -pv $DestPath/etc/yum.repos.d
-cp -vf $DNF $DestPath/etc/yum.repos.d
-
+$INSTALL_EXE $Libs7 $DestPath/usr/lib
+$INSTALL_EXE $Libs8 $DestPath/usr/lib
+$INSTALL_EXE $Libs9 $DestPath/usr/lib
 
 
-echo "+++ copy things from $UBootTools to"  $DestPath/etc/
-cp -vf $UBootTools $DestPath/etc
-
-echo "+++ copy things from $Xorgconf to"  $DestPath/etc/X11
-cp -vf $Xorgconf $DestPath/etc/X11
-$INSTALL_EXE $XserverConf $DestPath/etc/default/xserver-nodm
-
-echo "+++ copy things from $Environment to"  $DestPath/etc
-cp -vf $Environment $DestPath/etc
 
 echo "+++ copy things from $Mountnfs to"  $DestPath/etc/init.d
 # ein link in rc5.d mit S15mountnfs.sh startet das Ding noch vor dem mounten der fstab
-
-$INSTALL_EXE $Mountnfs $DestPath/etc/init.d/
  
 echo "+++ copy things from $scripts to"  $DestPath/home/root
 #$INSTALL_EXE $scripts $DestPath/home/root
@@ -213,6 +203,9 @@ if [ -d "$4" ]; then
     echo "+++ copy things from $FilePath to"  $DestPath/FileName
     cp -r -vf  $FilePath $DestPath/$FileName
 fi
+
+echo "Running the script to apply the config files"
+./apply_files_overlay.sh $SourcePath/overlay $DestPath
 
 cd ..
 echo "here we are:"
